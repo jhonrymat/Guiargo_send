@@ -37,4 +37,10 @@ return [
         'redirect' => 'http://guiarsend.test.xyz/auth/callback-url',
     ],
 
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT_URI')
+      ],
+
 ];

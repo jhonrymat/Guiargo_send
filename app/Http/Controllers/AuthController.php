@@ -17,38 +17,60 @@ class AuthController extends Controller
 
     public function callback()
     {
-        $fecha = Carbon::now();
-        $userGoolge = Socialite::driver('google')->user();
+        $userGoogle = Socialite::driver('google')->user();
 
-        $userExists = User::Where('email', $userGoolge->email)->first();
-        if ($userExists) {
-            $user = User::find($userExists->id);
-            if ($user != null) {
-                $user->name                 = $userGoolge->name;
-                $user->google_id            = $userGoolge->id;
-                $user->google_token         = $userGoolge->token;
-                $user->profile_photo_path   = $userGoolge->avatar;
-                $user->save();
-            }
-        }else{
+    // Buscar al usuario por el correo electrónico
+    $userExists = User::where('email', $userGoogle->email)->first();
 
-            $user = User::updateOrCreate([
-                'google_id' => $userGoolge->id,
-            ], [
-                'name' => $userGoolge->name,
-                'email' => $userGoolge->email,
-                'email_verified_at' => $fecha,
-                'google_id' => $userGoolge->id,
-                'google_token' => $userGoolge->token,
-                'profile_photo_path' =>$userGoolge->avatar,
-            ]);
-        }
+    if ($userExists) {
+        // El usuario ya existe, maneja la lógica aquí si es necesario
+        Auth::login($userExists);
+    } else {
+        // Crear un nuevo usuario si no existe
+        $userNew = User::create([
+            'name' => $userGoogle->name,
+            'email' => $userGoogle->email,
+            'profile_photo_path' => $userGoogle->avatar,
+            'google_id' => $userGoogle->id,
+            'email_verified_at' => Carbon::now(),
+            'google_token' => 'google',
+        ]);
 
+        Auth::login($userNew);
+    }
 
+    return redirect('/dashboard');
+    }
 
+    public function redirectFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
 
-        Auth::login($user);
+    public function callbackFacebook()
+    {
+        $userFacebook = Socialite::driver('facebook')->user();
 
-        return redirect('/dashboard');
+    // Buscar al usuario por el correo electrónico
+    $userExists = User::where('email', $userFacebook->email)->first();
+
+    if ($userExists) {
+        // El usuario ya existe, maneja la lógica aquí si es necesario
+        Auth::login($userExists);
+    } else {
+        // Crear un nuevo usuario si no existe
+        $userNew = User::create([
+            'name' => $userFacebook->name,
+            'email' => $userFacebook->email,
+            'profile_photo_path' => $userFacebook->avatar,
+            'facebook_id' => $userFacebook->id,
+            'email_verified_at' => Carbon::now(),
+            'facebook_token' => 'facebook',
+        ]);
+
+        Auth::login($userNew);
+    }
+
+    return redirect('/dashboard');
     }
 }

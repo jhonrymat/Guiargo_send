@@ -45,7 +45,7 @@
                     </div>
                     <div class="signup-form">
                         <h2 class="form-title">Iniciar sesión</h2>
-                        <form method="POST" class="register-form" id="register-form" action="{{ $login_url }}"
+                        <form class="register-form" id="register-form" action="{{ $login_url }}"
                             method="post">
                             @csrf
                             <div class="form-group">
@@ -79,7 +79,7 @@
                         <div class="social-login">
                             <span class="social-label">O inicia sesión con: </span>
                             <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="{{ url('/login-facebook') }}"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                                 <li><a href="{{ url('/auth/redirect') }}"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
                         </div>

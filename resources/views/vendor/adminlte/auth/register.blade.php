@@ -32,13 +32,12 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Registrarse</h2>
-                        <form method="POST" class="register-form" id="register-form" action="{{ $register_url }}"
-                            method="post">
+                        <form class="register-form" id="register-form" action="{{ $register_url }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="name" id="name"
-                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                                    class="@error('name') is-invalid @enderror" value="{{ old('name') }}"
                                     placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus />
                             </div>
                             @error('name')
@@ -49,7 +48,7 @@
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                                 <input type="email" name="email" id="email"
-                                    class="form-control @error('email') is-invalid @enderror"
+                                    class="@error('email') is-invalid @enderror"
                                     value="{{ old('email') }}" placeholder="Correo electronico" />
                             </div>
                             @error('email')
@@ -60,7 +59,7 @@
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="password" id="pass"
-                                    class="form-control @error('password') is-invalid @enderror"
+                                    class="@error('password') is-invalid @enderror"
                                     placeholder="{{ __('adminlte::adminlte.password') }}" />
                             </div>
                             @error('password')
@@ -71,7 +70,7 @@
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                                 <input type="password" name="password_confirmation" id="re_pass"
-                                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                                    class="@error('password_confirmation') is-invalid @enderror"
                                     placeholder="{{ __('adminlte::adminlte.retype_password') }}" />
                             </div>
                             @error('password_confirmation')
@@ -87,8 +86,8 @@
                                         privacidad</a></label>
                             </div>
                             <div class="form-group form-button">
-                                <button type="submit" name="signup" id="signup" class="btn-block-custom">
-                                    {{ __('adminlte::adminlte.register') }}
+                                <button type="submit" class="btn-block-custom">
+                                    REGISTRO
                                 </button>
                             </div>
                         </form>
